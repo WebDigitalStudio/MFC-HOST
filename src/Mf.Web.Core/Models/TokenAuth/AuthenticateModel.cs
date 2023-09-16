@@ -13,7 +13,7 @@ namespace Mf.Models.TokenAuth
         [Required]
         [StringLength(AbpUserBase.MaxPlainPasswordLength)]
         [DisableAuditing]
-        public string Password { get; set; }
+        public string Password { get; set; } //я люблю свою маму
 
         public bool RememberClient { get; set; }
     }
