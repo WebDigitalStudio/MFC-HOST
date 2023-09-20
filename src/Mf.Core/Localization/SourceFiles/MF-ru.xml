@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<localizationDictionary culture="en">
+    <texts>
+        <text name="HomePage" value="Домашняя страница!" />
+        <text name="About" value="Информация о нас" />
+        <text name="WelcomeMessage" value="Добро пожаловать!" />
+        <text name="FormIsNotValidMessage" value="Форма не работает. Пожалуйста посмотрите и исправьте ошибки." />
+        <text name="TenantNameCanNotBeEmpty" value="Tenant имя не существует" />
+        <text name="InvalidUserNameOrPassword" value="Неправильное имя или паролб" />
+        <text name="ThereIsNoTenantDefinedWithName{0}" value="There is no tenant defined with name {0}" />
+        <text name="TenantIsNotActive" value="Tenant {0} is not active." />
+        <text name="UserIsNotActiveAndCanNotLogin" value="User {0} is not active and can not log in." />
+        <text name="UserEmailIsNotConfirmedAndCanNotLogin">Your email address is not confirmed. You can not login.</text>
+        <text name="UserLockedOutMessage">The user account has been locked out. Please try again later.</text>
+        <text name="PleaseEnterLoginInformation" value="Please enter login information" />
+        <text name="TenancyName" value="Tenancy name" />
+        <text name="UserNameOrEmail" value="User name or email" />
+        <text name="Password" value="Password" />
+        <text name="ResetPassword" value="Сбросить пароль" />
+        <text name="UpdatePassword" value="Обновить пароль" />
+        <text name="RememberMe" value="Запомнить меня" />
+        <text name="LogIn" value="Войти" />
+        <text name="LoginFailed" value="Ошибка входа!" />
+        <text name="NameSurname" value="Имя фамилия" />
+        <text name="UserName" value="Логин" />
+        <text name="Name" value="Имя" />
+        <text name="Surname" value="Фамилия" />
+        <text name="EmailAddress" value="Почта" />
+        <text name="Tenants" value="Владельцы" />
+        <text name="SavedSuccessfully" value="Успешно сохранено" />
+        <text name="CreateNewTenant" value="Создать нового владельца" />
+        <text name="AdminEmailAddress" value="Почта админа" />
+        <text name="AdminPassword" value="Пароль админа" />
+        <text name="Save" value="Сохранить" />
+        <text name="Cancel" value="Отменить" />
+        <text name="TenantName_Regex_Description" value="Имя владельца должно состоять как минимум из двух символов, начинаться с буквы и продолжаться буквой, цифрой, тире или подчеркиванием." />
+        <text name="DefaultPasswordIs" value="Дефолтный пароль это {0}" />
+        <text name="CanBeEmptyToLoginAsHost" value="Может быть пустым для входа в качестве хоста." />
+        <text name="Register" value="Регистрация" />
+        <text name="OrLoginWith" value="Авторизироваться с помощью" />
+        <text name="WaitingForActivationMessage" value="Ваш аккаунт создан и ждет потверждения от администратора." />
+        <text name="TenantSelection" value="Выбор владельца" />
+        <text name="TenantSelection_Detail" value="Пожалуйста, выберите одного из следующих владельцев." />
+        <text name="Logout" value="Выйти" />
+        <text name="RegisterFormUserNameInvalidMessage">Пожалуйста, не вводите почту, как имя пользователя</text>
+        <text name="DatabaseConnectionString" value="Database connection string" />
+        <text name="Users" value="Пользователи" />
+        <text name="IsActive" value="Активен" />
+        <text name="FullName" value="Полное имя" />
+        <text name="CreateNewUser" value="Создать нового пользователя" />
+        <text name="Yes" value="Да" />
+        <text name="No" value="Нет" />
+        <text name="Optional" value="Необязательный" />
+        <text name="LeaveEmptyToSwitchToHost">Оставьте пустым, чтобы переключиться на хост</text>
+        <text name="CurrentTenant">Текущий владелец</text>
+        <text name="NotSelected">Не выбрано</text>
+        <text name="Change">Поменять</text>
+        <text name="ChangeTenant">Поменять владельца</text>
+        <text name="MultiLevelMenu">Multi Level Menu</text>
+        <text name="Back">Назад</text>
+        <text name="SuccessfullyRegistered">Регистрация успешна!</text>
+        <text name="WaitingForEmailActivation">Ваш адрес электронной почты должен быть активирован</text>
+        <text name="Roles">Роли</text>
+        <text name="DisplayName">Отображаемое имя</text>
+        <text name="Edit">Редактировать</text>
+        <text name="Delete">Удалить</text>
+        <text name="CreateNewRole">Создать новую роль</text>
+        <text name="RoleName">Имя роли</text>
+        <text name="Actions">Действия</text>
+        <text name="CouldNotCompleteLoginOperation">Не удалось завершить операцию входа. Пожалуйста, повторите попытку позже.</text>
+        <text name="CouldNotValidateExternalUser">Не удалось проверить внешнего пользователя</text>
+        <text name="EditRole">Редактировать роль</text>
+        <text name="EditTenant">Edit tenant</text>
+        <text name="EditUser">Редактировать пользователя</text>
+        <text name="TenantIdIsNotActive{0}">TenantId {0} is not active</text>
+        <text name="UnknownTenantId{0}">Unknown tenantId {0}</text>
+        <text name="ThisFieldIsRequired">Это поле обязательно к заполнению</text>
+        <text name="PleaseWait">Пожалуйста подождите...</text>
+        <text name="Administration">Администрация</text>
+        <text name="ClearAll">Очистить все</text>
+        <text name="ClearOthers">Очистить другое</text>
+        <text name="LabelOptions">Параметры метки</text>
+        <text name="Permissions">Доступы</text>
+        <text name="RoleDescription">Описание</text>
+        <text name="Refresh">Обновить</text>
+        <text name="Create">Создать</text>
+        <text name="UserDetails">Подробности</text>
+        <text name="UserRoles">Роли пользователя</text>
+        <text name="ConfirmPassword">Потвердите пароль</text>
+        <text name="Version">Версия</text>
+        <text name="On">Включить</text>
+        <text name="Off">Выключить</text>
+        <text name="AreYouSureWantToDelete">Вы серьезно хотите удалить {0}?</text>
+        <text name="SuccessfullyDeleted">Успешно удалено</text>
+        <text name="StartTyping">Печатает...</text>
+        <text name="Skins">Skins</text>
+        <text name="Settings">Настройки</text>
+        <text name="Filter">Фильтр</text>
+        <text name="CurrentPassword">Текущий пароль</text>
+        <text name="NewPassword">Новый пароль</text>
+        <text name="ConfirmNewPassword">Потвердите новый пароль</text>
+        <text name="PasswordsDoNotMatch">Пароли не совпадают</text>
+        <text name="PasswordsMustBeAtLeast8CharactersContainLowercaseUppercaseNumber">Passwords must be at least 8 characters, contain a lowercase, uppercase, and number</text>
+        <text name="UserDeleteWarningMessage">User {0} will be deleted.</text>
+        <text name="RoleDeleteWarningMessage">Role {0} will be deleted and unassigned from all assigned users.</text>
+        <text name="TenantDeleteWarningMessage">Tenant {0} will be deleted.</text>
+        <text name="SearchWithThreeDot">Поиск...</text>
+        <text name="PleaseEnterAtLeastNCharacter">Please enter at least {0} characters</text>
+        <text name="PleaseEnterNoMoreThanNCharacter">Please enter no more than {0} characters</text>
+        <text name="InvalidEmailAddress">Неправильный адресс почты</text>
+        <text name="InvalidPattern">Invalid</text>
+        <text name="PairsDoNotMatch">Do not match</text>
+        <text name="All">Все</text>
+        <text name="TotalRecordsCount">Total: {0}</text>
+        <text name="Search">Поиск</text>
+        <text name="Clear">Очистка</text>
+        <text name="ResetPasswordStepOneInfo">1. Enter your administrator password</text>
+        <text name="ResetPasswordStepTwoInfo">2. Copy this random password so you can send it to the user</text>
+        <text name="UsersActivation">Users activation</text>
+    </texts>
+</localizationDictionary>
