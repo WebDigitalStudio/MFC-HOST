@@ -40,6 +40,7 @@ namespace Mf.Authorization.Accounts
             var user = await _userRegistrationManager.RegisterAsync(
                 input.Name,
                 input.Surname,
+                input.Gender,
                 input.EmailAddress,
                 input.UserName,
                 input.Password,

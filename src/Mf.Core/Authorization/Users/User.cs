@@ -30,5 +30,6 @@ namespace Mf.Authorization.Users
 
             return user;
         }
+        
     }
 }
