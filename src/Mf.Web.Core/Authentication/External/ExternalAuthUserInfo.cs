@@ -9,6 +9,8 @@
         public string EmailAddress { get; set; }
 
         public string Surname { get; set; }
+        
+        public string Gender { get; set; }
 
         public string Provider { get; set; }
     }
