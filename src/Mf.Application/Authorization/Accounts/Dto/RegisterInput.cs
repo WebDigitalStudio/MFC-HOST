@@ -16,6 +16,10 @@ namespace Mf.Authorization.Accounts.Dto
         [Required]
         [StringLength(AbpUserBase.MaxSurnameLength)]
         public string Surname { get; set; }
+        
+        [Required]
+        [StringLength(AbpUserBase.MaxSurnameLength)]
+        public string Gender { get; set; }
 
         [Required]
         [StringLength(AbpUserBase.MaxUserNameLength)]
