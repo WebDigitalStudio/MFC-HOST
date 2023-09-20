@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<localizationDictionary culture="en">
+<localizationDictionary culture="ru">
     <texts>
         <text name="HomePage" value="Домашняя страница!" />
         <text name="About" value="Информация о нас" />
