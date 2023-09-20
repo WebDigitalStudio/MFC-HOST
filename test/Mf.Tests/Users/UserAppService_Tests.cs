@@ -38,6 +38,7 @@ namespace Mf.Tests.Users
                     IsActive = true,
                     Name = "John",
                     Surname = "Nash",
+                    Gender = "male",
                     Password = "123qwe",
                     UserName = "john.nash"
                 });
