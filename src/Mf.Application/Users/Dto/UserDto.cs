@@ -17,7 +17,11 @@ namespace Mf.Users.Dto
         [Required]
         [StringLength(AbpUserBase.MaxNameLength)]
         public string Name { get; set; }
-
+        
+        [Required]
+        [StringLength(AbpUserBase.MaxNameLength)]
+        public string Gender { get; set; }
+        
         [Required]
         [StringLength(AbpUserBase.MaxSurnameLength)]
         public string Surname { get; set; }
