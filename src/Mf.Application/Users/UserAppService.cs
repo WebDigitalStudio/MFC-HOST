@@ -124,6 +124,14 @@ namespace Mf.Users
             return new ListResultDto<RoleDto>(ObjectMapper.Map<List<RoleDto>>(roles));
         }
 
+        public async Task<object> GetPreferendGender(GetPreferendGenderDto input)
+        {
+            var genders = new { UserId = await _userManager.GetUserByIdAsync(_abpSession.GetUserId()), 
+                PreferendGender = "male" };
+            return genders;
+        }
+            
+        
         public async Task ChangeLanguage(ChangeUserLanguageDto input)
         {
             await SettingManager.ChangeSettingForUserAsync(
