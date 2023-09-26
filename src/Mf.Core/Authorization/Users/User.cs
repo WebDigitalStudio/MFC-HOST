@@ -8,6 +8,7 @@ namespace Mf.Authorization.Users
     public class User : AbpUser<User>
     {
         public const string DefaultPassword = "123qwe";
+        public string Gender { get; set; }
 
         public static string CreateRandomPassword()
         {
