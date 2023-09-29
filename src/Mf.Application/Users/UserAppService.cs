@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using Abp.Authorization;
+using Abp.Authorization.Users;
 using Abp.Domain.Entities;
 using Abp.Domain.Repositories;
 using Abp.Extensions;
@@ -126,8 +127,8 @@ namespace Mf.Users
 
         public async Task<object> GetPreferendGender(GetPreferendGenderDto input)
         {
-            var genders = new { UserId = await _userManager.GetUserByIdAsync(_abpSession.GetUserId()), 
-                PreferendGender = "male" };
+            var genders = new { UserId = input.UserId, 
+                PreferendGender = "test" };
             return genders;
         }
             
