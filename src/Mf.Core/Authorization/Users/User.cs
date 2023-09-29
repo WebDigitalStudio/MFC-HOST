@@ -8,14 +8,15 @@ namespace Mf.Authorization.Users
     public class User : AbpUser<User>
     {
         public const string DefaultPassword = "123qwe";
-        public string Gender { get; set; }
+
+        public string Gender { get; set; } // new Gender field added
 
         public static string CreateRandomPassword()
         {
             return Guid.NewGuid().ToString("N").Truncate(16);
         }
 
-        public static User CreateTenantAdminUser(int tenantId, string emailAddress)
+        public static User CreateTenantAdminUser(int tenantId, string emailAddress, string gender) // Updated to include gender
         {
             var user = new User
             {
@@ -24,6 +25,7 @@ namespace Mf.Authorization.Users
                 Name = AdminUserName,
                 Surname = AdminUserName,
                 EmailAddress = emailAddress,
+                Gender = gender, 
                 Roles = new List<UserRole>()
             };
 
@@ -31,6 +33,5 @@ namespace Mf.Authorization.Users
 
             return user;
         }
-        
     }
 }
