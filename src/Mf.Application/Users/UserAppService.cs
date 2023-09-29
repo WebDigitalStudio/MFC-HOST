@@ -127,12 +127,16 @@ namespace Mf.Users
 
         public async Task<object> GetPreferendGender(GetPreferendGenderDto input)
         {
-            var genders = new { UserId = input.UserId, 
-                PreferendGender = "test" };
+            var PreferendGender = "";
+            await Repository.UpdateAsync(Convert.ToInt64(input.UserId), async (entity) =>
+            {
+                PreferendGender = entity.PreferendGender;
+            });
+            var genders = new { UserId = input.UserId, PreferendGender};
             return genders;
         }
             
-        
+        //await Repository.GetAllIncluding(x => x.Permissions).FirstOrDefaultAsync(x => x.Id == id);
         public async Task ChangeLanguage(ChangeUserLanguageDto input)
         {
             await SettingManager.ChangeSettingForUserAsync(
