@@ -1483,6 +1483,9 @@ namespace Mf.Migrations
                         .HasMaxLength(328)
                         .HasColumnType("character varying(328)");
 
+                    b.Property<string>("Gender")
+                        .HasColumnType("text");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 

@@ -48,6 +48,7 @@ namespace Mf.Authorization.Users
                 TenantId = tenant.Id,
                 Name = name,
                 Surname = surname,
+                Gender = gender,         
                 EmailAddress = emailAddress,
                 IsActive = true,
                 UserName = userName,
