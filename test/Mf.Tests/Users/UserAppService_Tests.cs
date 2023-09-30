@@ -39,6 +39,7 @@ namespace Mf.Tests.Users
                     Name = "John",
                     Surname = "Nash",
                     Gender = "male",
+                    PreferendGender = "female",
                     Password = "123qwe",
                     UserName = "john.nash"
                 });

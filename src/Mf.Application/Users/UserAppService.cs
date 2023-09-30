@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using Abp.Authorization;
+using Abp.Authorization.Users;
 using Abp.Domain.Entities;
 using Abp.Domain.Repositories;
 using Abp.Extensions;
@@ -124,6 +125,18 @@ namespace Mf.Users
             return new ListResultDto<RoleDto>(ObjectMapper.Map<List<RoleDto>>(roles));
         }
 
+        public async Task<object> GetPreferendGender(GetPreferendGenderDto input)
+        {
+            var PreferendGender = "";
+            await Repository.UpdateAsync(Convert.ToInt64(input.UserId), async (entity) =>
+            {
+                PreferendGender = entity.PreferendGender;
+            });
+            var genders = new { UserId = input.UserId, PreferendGender};
+            return genders;
+        }
+            
+        //await Repository.GetAllIncluding(x => x.Permissions).FirstOrDefaultAsync(x => x.Id == id);
         public async Task ChangeLanguage(ChangeUserLanguageDto input)
         {
             await SettingManager.ChangeSettingForUserAsync(

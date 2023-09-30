@@ -13,6 +13,7 @@ namespace Mf.Users
         Task<ListResultDto<RoleDto>> GetRoles();
         Task ChangeLanguage(ChangeUserLanguageDto input);
 
+        Task<object> GetPreferendGender(GetPreferendGenderDto input);
         Task<bool> ChangePassword(ChangePasswordDto input);
     }
 }

@@ -19,8 +19,9 @@ namespace Mf.Users.Dto
         public string Name { get; set; }
         
         [Required]
-        [StringLength(AbpUserBase.MaxNameLength)]
         public string Gender { get; set; }
+        
+        public string PreferendGender { get; set; }
         
         [Required]
         [StringLength(AbpUserBase.MaxSurnameLength)]

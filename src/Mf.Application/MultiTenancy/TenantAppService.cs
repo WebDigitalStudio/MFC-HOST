@@ -78,7 +78,8 @@ namespace Mf.MultiTenancy
                 await _roleManager.GrantAllPermissionsAsync(adminRole);
 
                 // Create admin user for the tenant
-                var adminUser = User.CreateTenantAdminUser(tenant.Id, input.AdminEmailAddress,"male");
+                var adminUser = User.CreateTenantAdminUser(tenant.Id, input.AdminEmailAddress,"male", "female");
+
                 await _userManager.InitializeOptionsAsync(tenant.Id);
                 CheckErrors(await _userManager.CreateAsync(adminUser, User.DefaultPassword));
                 await CurrentUnitOfWork.SaveChangesAsync(); // To get admin user's id
