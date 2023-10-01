@@ -21,6 +21,7 @@ namespace Mf.Users.Dto
         [Required]
         public string Gender { get; set; }
         
+        [Required]
         public string PreferendGender { get; set; }
         
         [Required]
@@ -41,5 +42,7 @@ namespace Mf.Users.Dto
         public DateTime CreationTime { get; set; }
 
         public string[] RoleNames { get; set; }
+        
     }
+    
 }

@@ -25,6 +25,7 @@ namespace Mf.Users.Dto
         [Required]
         public string Gender { get; set; }
         
+        [Required]
         public string PreferendGender { get; set; }
 
         [Required]
@@ -40,7 +41,7 @@ namespace Mf.Users.Dto
         [StringLength(AbpUserBase.MaxPlainPasswordLength)]
         [DisableAuditing]
         public string Password { get; set; }
-
+        
         public void Normalize()
         {
             if (RoleNames == null)

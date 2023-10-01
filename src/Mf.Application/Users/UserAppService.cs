@@ -57,7 +57,7 @@ namespace Mf.Users
         public override async Task<UserDto> CreateAsync(CreateUserDto input)
         {
             CheckCreatePermission();
-
+            
             var user = ObjectMapper.Map<User>(input);
 
             user.TenantId = AbpSession.TenantId;
@@ -66,7 +66,7 @@ namespace Mf.Users
             await _userManager.InitializeOptionsAsync(AbpSession.TenantId);
 
             CheckErrors(await _userManager.CreateAsync(user, input.Password));
-
+            
             if (input.RoleNames != null)
             {
                 CheckErrors(await _userManager.SetRolesAsync(user, input.RoleNames));
@@ -93,6 +93,17 @@ namespace Mf.Users
             }
 
             return await GetAsync(input);
+        }
+        //public async Task ChangeLanguage(ChangeUserLanguageDto input)
+        public async Task UpdatePreferendGender(UpdatePreferendGenderDto input)
+        {
+            await Repository.UpdateAsync(Convert.ToInt64(input.UserId), async (entity) =>
+            {
+                if (input.NewPreferendGender != entity.PreferendGender)
+                {
+                    entity.PreferendGender = input.NewPreferendGender;
+                }
+            });
         }
 
         public override async Task DeleteAsync(EntityDto<long> input)
@@ -128,6 +139,7 @@ namespace Mf.Users
         public async Task<object> GetPreferendGender(GetPreferendGenderDto input)
         {
             var PreferendGender = "";
+            
             await Repository.UpdateAsync(Convert.ToInt64(input.UserId), async (entity) =>
             {
                 PreferendGender = entity.PreferendGender;
