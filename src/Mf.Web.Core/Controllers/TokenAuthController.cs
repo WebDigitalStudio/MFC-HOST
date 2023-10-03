@@ -144,6 +144,8 @@ namespace Mf.Controllers
                 externalUser.EmailAddress,
                 externalUser.Gender,
                 externalUser.PreferendGender,
+                externalUser.Interests,
+                externalUser.Location,
                 externalUser.EmailAddress,
                 Authorization.Users.User.CreateRandomPassword(),
                 true

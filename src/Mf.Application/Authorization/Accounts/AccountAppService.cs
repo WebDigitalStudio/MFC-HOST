@@ -42,6 +42,8 @@ namespace Mf.Authorization.Accounts
                 input.Surname,
                 input.Gender,
                 input.PreferendGender,
+                input.Location,
+                input.Interests,
                 input.EmailAddress,
                 input.UserName,
                 input.Password,

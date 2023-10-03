@@ -77,8 +77,10 @@ namespace Mf.MultiTenancy
                 var adminRole = _roleManager.Roles.Single(r => r.Name == StaticRoleNames.Tenants.Admin);
                 await _roleManager.GrantAllPermissionsAsync(adminRole);
 
+                string[] interests = { "dota2", "hobbyhoursing" };
+                
                 // Create admin user for the tenant
-                var adminUser = User.CreateTenantAdminUser(tenant.Id, input.AdminEmailAddress,"male", "female");
+                var adminUser = User.CreateTenantAdminUser(tenant.Id, input.AdminEmailAddress,"male", "female", "Moscow", interests);
 
                 await _userManager.InitializeOptionsAsync(tenant.Id);
                 CheckErrors(await _userManager.CreateAsync(adminUser, User.DefaultPassword));

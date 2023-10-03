@@ -21,6 +21,11 @@ namespace Mf.Authorization.Accounts.Dto
         public string Gender { get; set; }
         
         public string PreferendGender { get; set; }
+        
+        [Required]
+        public string Location { get; set; }
+        
+        public string[] Interests { get; set; }
 
         [Required]
         [StringLength(AbpUserBase.MaxUserNameLength)]

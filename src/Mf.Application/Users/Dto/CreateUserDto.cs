@@ -27,6 +27,11 @@ namespace Mf.Users.Dto
         
         [Required]
         public string PreferendGender { get; set; }
+        
+        [Required]
+        public string Location { get; set; }
+        
+        public string[] Interests { get; set; }
 
         [Required]
         [EmailAddress]

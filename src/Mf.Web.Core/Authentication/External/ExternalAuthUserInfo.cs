@@ -13,6 +13,10 @@
         public string Gender { get; set; }
         
         public string PreferendGender { get; set; }
+        
+        public string Location { get; set; }
+        
+        public string[] Interests { get; set; }
 
         public string Provider { get; set; }
     }

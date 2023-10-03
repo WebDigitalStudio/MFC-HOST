@@ -15,6 +15,10 @@ namespace Mf.Sessions.Dto
         
         public string PreferendGender { get; set; }
 
+        public string Location { get; set; }
+        
+        public string[] Interests { get; set; }
+
         public string UserName { get; set; }
 
         public string EmailAddress { get; set; }
