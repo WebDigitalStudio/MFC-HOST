@@ -14,6 +14,6 @@ namespace Mf.Users.Dto
 
             CreateMap<CreateUserDto, User>();
             CreateMap<CreateUserDto, User>().ForMember(x => x.Roles, opt => opt.Ignore());
-        }
+        }   
     }
 }

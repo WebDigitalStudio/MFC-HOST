@@ -18,6 +18,9 @@ namespace Mf.Authorization.Accounts.Dto
         public string Surname { get; set; }
         
         [Required]
+        public int Age { get; set; }
+        
+        [Required]
         public string Gender { get; set; }
         
         public string PreferendGender { get; set; }

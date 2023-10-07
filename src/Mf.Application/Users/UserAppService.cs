@@ -7,6 +7,7 @@ using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using Abp.Authorization;
 using Abp.Authorization.Users;
+using Abp.Collections.Extensions;
 using Abp.Domain.Entities;
 using Abp.Domain.Repositories;
 using Abp.Extensions;
@@ -15,6 +16,7 @@ using Abp.Linq.Extensions;
 using Abp.Localization;
 using Abp.Runtime.Session;
 using Abp.UI;
+using JetBrains.Annotations;
 using Mf.Authorization;
 using Mf.Authorization.Accounts;
 using Mf.Authorization.Roles;
@@ -147,8 +149,17 @@ namespace Mf.Users
             var genders = new { UserId = input.UserId, PreferendGender};
             return genders;
         }
-            
-        //await Repository.GetAllIncluding(x => x.Permissions).FirstOrDefaultAsync(x => x.Id == id);
+
+        public async Task<object> GetPreferendPeople(GetPreferendPeopleDto input)
+        {
+
+            var user = Repository.GetAll()
+                .Where(x => x.Gender.Contains(input.PreferendGender))
+                .Where(x => x.Location.Contains(input.Location));
+
+            return user;
+        }
+        
         public async Task ChangeLanguage(ChangeUserLanguageDto input)
         {
             await SettingManager.ChangeSettingForUserAsync(

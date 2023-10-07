@@ -80,7 +80,7 @@ namespace Mf.MultiTenancy
                 string[] interests = { "dota2", "hobbyhoursing" };
                 
                 // Create admin user for the tenant
-                var adminUser = User.CreateTenantAdminUser(tenant.Id, input.AdminEmailAddress,"male", "female", "Moscow", interests);
+                var adminUser = User.CreateTenantAdminUser(tenant.Id, input.AdminEmailAddress,"male", "female", "Moscow", interests, 18);
 
                 await _userManager.InitializeOptionsAsync(tenant.Id);
                 CheckErrors(await _userManager.CreateAsync(adminUser, User.DefaultPassword));

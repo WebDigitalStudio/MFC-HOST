@@ -13,13 +13,14 @@ namespace Mf.Authorization.Users
         public string PreferendGender { get; set; }  // new PreferendGender field added
         public string Location { get; set; }  // new Location field added
         public string[] Interests { get; set; }  
+        public int Age { get; set; } // new Age field added
         
         public static string CreateRandomPassword()
         {
             return Guid.NewGuid().ToString("N").Truncate(16);
         }
 
-        public static User CreateTenantAdminUser(int tenantId, string emailAddress, string gender, string preferendGender, string location, string[] interests)
+        public static User CreateTenantAdminUser(int tenantId, string emailAddress, string gender, string preferendGender, string location, string[] interests, int age)
         {
             var user = new User
             {
@@ -27,6 +28,7 @@ namespace Mf.Authorization.Users
                 UserName = AdminUserName,
                 Name = AdminUserName,
                 Surname = AdminUserName,
+                Age = age,
                 Gender = gender,
                 PreferendGender = preferendGender,
                 Location = location,

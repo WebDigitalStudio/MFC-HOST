@@ -73,7 +73,7 @@ namespace Mf.EntityFrameworkCore.Seed.Tenants
             if (adminUser == null)
             {
                 string[] interests = { "dota2", "hobbyhoursing" };
-                adminUser = User.CreateTenantAdminUser(_tenantId, "admin@defaulttenant.com", "male", "female", "Moscow", interests);
+                adminUser = User.CreateTenantAdminUser(_tenantId, "admin@defaulttenant.com", "male", "female", "Moscow", interests, 18);
                 adminUser.Password = new PasswordHasher<User>(new OptionsWrapper<PasswordHasherOptions>(new PasswordHasherOptions())).HashPassword(adminUser, "123qwe");
                 adminUser.IsEmailConfirmed = true;
                 adminUser.IsActive = true;
