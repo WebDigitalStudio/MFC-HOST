@@ -150,13 +150,10 @@ namespace Mf.Users
             return genders;
         }
 
-        public async Task<object> GetPreferendPeople(GetPreferendPeopleDto input)
+        public async Task<User> GetPreferendPeople(GetPreferendPeopleDto input)
         {
-
-            var user = Repository.GetAll()
-                .Where(x => x.Gender.Contains(input.PreferendGender))
-                .Where(x => x.Location.Contains(input.Location));
-
+            var user = await Repository.GetAllIncluding()
+                .FirstOrDefaultAsync(x => x.Location == input.Location);
             return user;
         }
         
