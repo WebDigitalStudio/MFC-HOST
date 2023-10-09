@@ -8,7 +8,7 @@ namespace Mf.Users.Dto;
 public class UpdatePreferendGenderDto : IValidatableObject
 {
     [Required(ErrorMessage = "Поле 'UserId' обязательно для заполнения.")]
-    public string UserId { get; set; }
+    public long UserId { get; set; }
 
     [Required(ErrorMessage = "Поле 'NewPreferendGender' обязательно для заполнения.")]
     public string NewPreferendGender { get; set; }
@@ -24,7 +24,7 @@ public class UpdatePreferendGenderDto : IValidatableObject
                 new[] { nameof(NewPreferendGender) });
         }
 
-        if (string.IsNullOrWhiteSpace(UserId))
+        if (UserId != null)
         {
             yield return new ValidationResult("Поле 'UserId' не может быть пустым или содержать только пробелы.",
                 new[] { nameof(UserId) });

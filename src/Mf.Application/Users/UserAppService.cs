@@ -92,7 +92,7 @@ namespace Mf.Users
 
             if (input.RoleNames != null)
             {
-                CheckErrors(await _userManager.SetRolesAsync(user, input.RoleNames));
+                CheckErrors(await _userManager.SetRolesAsync(user, input.RoleNames.ToArray()));
             }
 
             return await GetAsync(input);
@@ -100,7 +100,7 @@ namespace Mf.Users
         //public async Task ChangeLanguage(ChangeUserLanguageDto input)
         public async Task UpdatePreferendGender(UpdatePreferendGenderDto input)
         {
-            await Repository.UpdateAsync(Convert.ToInt64(input.UserId), async (entity) =>
+            await Repository.UpdateAsync(input.UserId, async (entity) =>
             {
                 if (input.NewPreferendGender != entity.PreferendGender)
                 {
@@ -152,34 +152,20 @@ namespace Mf.Users
             
             ////переписать более красиво.
         }
-
         
-        public async Task<JsonResult> GetPreferendPeople(GetPreferendPeopleDto input)
+        public async Task<GetPreferendPeopleDtoResult> GetPreferendPeople(GetPreferendPeopleDtoInput input)
         {
-            var users = await Repository.GetAllIncluding()
+            var includedQuery = Repository.GetAllIncluding();
+
+            var filteredQuery = includedQuery
                 .WhereIf(!input.Location.IsNullOrWhiteSpace(), x => x.Location == input.Location)
                 .Where(x => x.Gender == input.PreferendGender)
-                .Where(x => x.Age > input.ageMin)
-                .Where(x => x.Age < input.ageMax)
-                .ToListAsync();
+                .Where(x => x.Age > input.AgeMin && x.Age < input.AgeMax);
+            
+            var user = ObjectMapper.Map<GetPreferendPeopleDtoResult>(filteredQuery);
 
-            // Выбираем только необходимые поля
-            var selectedUsers = users.Select(x => new {
-                Id = x.Id,
-                Name = x.Name,
-                Surname = x.Surname,
-                Location = x.Location,
-                Gender = x.Gender,
-                PreferendGender = x.PreferendGender,
-                Email = x.EmailAddress,
-                Interests = x.Interests,
-                Age = x.Age
-            });
-
-            // Создаем объект JsonResult и передаем в него данные
-            return new JsonResult(selectedUsers);
+            return user;
         }
-
         
         public async Task ChangeLanguage(ChangeUserLanguageDto input)
         {
@@ -205,26 +191,38 @@ namespace Mf.Users
 
         protected override UserDto MapToEntityDto(User user)
         {
-            var roleIds = user.Roles.Select(x => x.RoleId).ToArray();
+            var roleIds = user.Roles
+                .Select(x => x.RoleId);
 
-            var roles = _roleManager.Roles.Where(r => roleIds.Contains(r.Id)).Select(r => r.NormalizedName);
+            var roles = _roleManager.Roles
+                .Where(r => roleIds.Equals(r.Id))
+                .Select(r => r.NormalizedName)
+                .ToList();
 
             var userDto = base.MapToEntityDto(user);
-            userDto.RoleNames = roles.ToArray();
+            userDto.RoleNames = roles;
 
             return userDto;
         }
 
         protected override IQueryable<User> CreateFilteredQuery(PagedUserResultRequestDto input)
         {
-            return Repository.GetAllIncluding(x => x.Roles)
-                .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x => x.UserName.Contains(input.Keyword) || x.Name.Contains(input.Keyword) || x.EmailAddress.Contains(input.Keyword))
-                .WhereIf(input.IsActive.HasValue, x => x.IsActive == input.IsActive);
+            var includedQuery = Repository.GetAllIncluding(x => x.Roles);
+
+            var filteredQuery = includedQuery
+                .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x => x.UserName.Contains(input.Keyword) 
+                                                                   || x.Name.Contains(input.Keyword) 
+                                                                   || x.EmailAddress.Contains(input.Keyword))
+                .WhereIf(input.IsActive.HasValue, x => x.IsActive.Equals(input.IsActive));
+
+            return filteredQuery;
         }
 
         protected override async Task<User> GetEntityByIdAsync(long id)
         {
-            var user = await Repository.GetAllIncluding(x => x.Roles).FirstOrDefaultAsync(x => x.Id == id);
+            var user = await Repository
+                .GetAllIncluding(x => x.Roles)
+                .FirstOrDefaultAsync(x => x.Id.Equals(id));
 
             if (user == null)
             {
@@ -251,7 +249,7 @@ namespace Mf.Users
             var user = await _userManager.FindByIdAsync(AbpSession.GetUserId().ToString());
             if (user == null)
             {
-                throw new Exception("There is no current user!");
+                throw new EntityNotFoundException(typeof(User), input);
             }
             
             if (await _userManager.CheckPasswordAsync(user, input.CurrentPassword))
