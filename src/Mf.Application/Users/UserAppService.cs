@@ -24,6 +24,7 @@ using Mf.Authorization.Users;
 using Mf.Roles.Dto;
 using Mf.Users.Dto;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mf.Users
@@ -139,8 +140,8 @@ namespace Mf.Users
         }
 
         public async Task<object> GetPreferendGender(GetPreferendGenderDto input)
-        {
-            var PreferendGender = "";
+        {   
+            string PreferendGender = "";
             
             await Repository.UpdateAsync(Convert.ToInt64(input.UserId), async (entity) =>
             {
@@ -148,14 +149,37 @@ namespace Mf.Users
             });
             var genders = new { UserId = input.UserId, PreferendGender};
             return genders;
+            
+            ////переписать более красиво.
         }
 
-        public async Task<User> GetPreferendPeople(GetPreferendPeopleDto input)
+        
+        public async Task<JsonResult> GetPreferendPeople(GetPreferendPeopleDto input)
         {
-            var user = await Repository.GetAllIncluding()
-                .FirstOrDefaultAsync(x => x.Location == input.Location);
-            return user;
+            var users = await Repository.GetAllIncluding()
+                .WhereIf(!input.Location.IsNullOrWhiteSpace(), x => x.Location == input.Location)
+                .Where(x => x.Gender == input.PreferendGender)
+                .Where(x => x.Age > input.ageMin)
+                .Where(x => x.Age < input.ageMax)
+                .ToListAsync();
+
+            // Выбираем только необходимые поля
+            var selectedUsers = users.Select(x => new {
+                Id = x.Id,
+                Name = x.Name,
+                Surname = x.Surname,
+                Location = x.Location,
+                Gender = x.Gender,
+                PreferendGender = x.PreferendGender,
+                Email = x.EmailAddress,
+                Interests = x.Interests,
+                Age = x.Age
+            });
+
+            // Создаем объект JsonResult и передаем в него данные
+            return new JsonResult(selectedUsers);
         }
+
         
         public async Task ChangeLanguage(ChangeUserLanguageDto input)
         {
