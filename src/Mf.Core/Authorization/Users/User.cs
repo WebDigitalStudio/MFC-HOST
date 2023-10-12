@@ -9,18 +9,25 @@ namespace Mf.Authorization.Users
     {
         public const string DefaultPassword = "123qwe";
         
-        public string Gender { get; set; } // new Gender field added
-        public string PreferendGender { get; set; }  // new PreferendGender field added
-        public string Location { get; set; }  // new Location field added
+        public string Gender { get; set; }
+        public string PreferendGender { get; set; }
+        public string Location { get; set; }
         public string[] Interests { get; set; }  
-        public int Age { get; set; } // new Age field added
+        public int Age { get; set; }
         
         public static string CreateRandomPassword()
         {
             return Guid.NewGuid().ToString("N").Truncate(16);
         }
 
-        public static User CreateTenantAdminUser(int tenantId, string emailAddress, string gender, string preferendGender, string location, string[] interests, int age)
+        public static User CreateTenantAdminUser(
+            int tenantId, 
+            string emailAddress, 
+            string gender, 
+            string preferendGender, 
+            string location, 
+            string[] interests, 
+            int age)
         {
             var user = new User
             {

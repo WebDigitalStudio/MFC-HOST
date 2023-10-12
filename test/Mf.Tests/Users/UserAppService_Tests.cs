@@ -32,7 +32,7 @@ namespace Mf.Tests.Users
         {
             // Act
             await _userAppService.CreateAsync(
-                new CreateUserDto
+                new CreateUserInput
                 {
                     EmailAddress = "john@volosoft.com",
                     IsActive = true,

@@ -8,7 +8,7 @@ using Mf.Authorization.Users;
 namespace Mf.Users.Dto
 {
     [AutoMapTo(typeof(User))]
-    public class CreateUserDto : IShouldNormalize
+    public class CreateUserInput : IShouldNormalize
     {
         [Required]
         [StringLength(AbpUserBase.MaxUserNameLength)]

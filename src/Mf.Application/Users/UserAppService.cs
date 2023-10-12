@@ -30,7 +30,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Mf.Users
 {
     [AbpAuthorize(PermissionNames.Pages_Users)]
-    public class UserAppService : AsyncCrudAppService<User, UserDto, long, PagedUserResultRequestDto, CreateUserDto, UserDto>, IUserAppService
+    public class UserAppService : AsyncCrudAppService<User, UserDto, long, PagedUserResultRequestDto, CreateUserInput, UserDto>, IUserAppService
     {
         private readonly UserManager _userManager;
         private readonly RoleManager _roleManager;
@@ -57,7 +57,7 @@ namespace Mf.Users
             _logInManager = logInManager;
         }
 
-        public override async Task<UserDto> CreateAsync(CreateUserDto input)
+        public override async Task<UserDto> CreateAsync(CreateUserInput input)
         {
             CheckCreatePermission();
             
@@ -75,7 +75,7 @@ namespace Mf.Users
                 CheckErrors(await _userManager.SetRolesAsync(user, input.RoleNames));
             }
 
-            CurrentUnitOfWork.SaveChanges();
+            await CurrentUnitOfWork.SaveChangesAsync();
 
             return MapToEntityDto(user);
         }
@@ -149,11 +149,9 @@ namespace Mf.Users
             });
             var genders = new { UserId = input.UserId, PreferendGender};
             return genders;
-            
-            ////переписать более красиво.
         }
         
-        public async Task<GetPreferendPeopleDtoResult> GetPreferendPeople(GetPreferendPeopleDtoInput input)
+        public GetPreferendPeopleDtoResult GetPreferendPeople(GetPreferendPeopleDtoInput input)
         {
             var includedQuery = Repository.GetAllIncluding();
 
@@ -176,7 +174,7 @@ namespace Mf.Users
             );
         }
 
-        protected override User MapToEntity(CreateUserDto createInput)
+        protected override User MapToEntity(CreateUserInput createInput)
         {
             var user = ObjectMapper.Map<User>(createInput);
             user.SetNormalizedNames();
