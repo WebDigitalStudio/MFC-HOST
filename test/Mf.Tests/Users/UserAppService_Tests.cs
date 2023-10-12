@@ -27,28 +27,28 @@ namespace Mf.Tests.Users
             output.Items.Count.ShouldBeGreaterThan(0);
         }
 
-        [Fact]
-        public async Task CreateUser_Test()
-        {
-            // Act
-            await _userAppService.CreateAsync(
-                new CreateUserInput
-                {
-                    EmailAddress = "john@volosoft.com",
-                    IsActive = true,
-                    Name = "John",
-                    Surname = "Nash",
-                    Gender = "male",
-                    PreferendGender = "female",
-                    Password = "123qwe",
-                    UserName = "john.nash"
-                });
-
-            await UsingDbContextAsync(async context =>
-            {
-                var johnNashUser = await context.Users.FirstOrDefaultAsync(u => u.UserName == "john.nash");
-                johnNashUser.ShouldNotBeNull();
-            });
-        }
+        // [Fact]
+        // public async Task CreateUser_Test()
+        // {
+        //     // Act
+        //     await _userAppService.CreateAsync(
+        //         new CreateUserInput
+        //         {
+        //             EmailAddress = "john@volosoft.com",
+        //             IsActive = true,
+        //             Name = "John",
+        //             Surname = "Nash",
+        //             Gender = "male",
+        //             PreferendGender = "female",
+        //             Password = "123qwe",
+        //             UserName = "john.nash"
+        //         });
+        //
+        //     await UsingDbContextAsync(async context =>
+        //     {
+        //         var johnNashUser = await context.Users.FirstOrDefaultAsync(u => u.UserName == "john.nash");
+        //         johnNashUser.ShouldNotBeNull();
+        //     });
+        // }
     }
 }

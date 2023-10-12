@@ -52,7 +52,7 @@ namespace Mf.Authorization.Users
                 Gender = gender,
                 PreferendGender = preferendGender,
                 Location = location,
-                Interests = interests,
+                // Interests = interests,
                 EmailAddress = emailAddress,
                 IsActive = true,
                 UserName = userName,
