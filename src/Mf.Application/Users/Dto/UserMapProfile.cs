@@ -12,8 +12,8 @@ namespace Mf.Users.Dto
                 .ForMember(x => x.Roles, opt => opt.Ignore())
                 .ForMember(x => x.CreationTime, opt => opt.Ignore());
 
-            CreateMap<CreateUserDto, User>();
-            CreateMap<CreateUserDto, User>().ForMember(x => x.Roles, opt => opt.Ignore());
-        }
+            CreateMap<CreateUserInput, User>();
+            CreateMap<CreateUserInput, User>().ForMember(x => x.Roles, opt => opt.Ignore());
+        }   
     }
 }

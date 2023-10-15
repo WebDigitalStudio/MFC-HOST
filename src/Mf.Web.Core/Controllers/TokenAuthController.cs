@@ -141,8 +141,12 @@ namespace Mf.Controllers
             var user = await _userRegistrationManager.RegisterAsync(
                 externalUser.Name,
                 externalUser.Surname,
+                externalUser.Age,
                 externalUser.EmailAddress,
                 externalUser.Gender,
+                externalUser.PreferendGender,
+                externalUser.Interests,
+                externalUser.Location,
                 externalUser.EmailAddress,
                 Authorization.Users.User.CreateRandomPassword(),
                 true

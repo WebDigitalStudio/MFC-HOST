@@ -8,7 +8,7 @@ using Mf.Authorization.Users;
 namespace Mf.Users.Dto
 {
     [AutoMapTo(typeof(User))]
-    public class CreateUserDto : IShouldNormalize
+    public class CreateUserInput : IShouldNormalize
     {
         [Required]
         [StringLength(AbpUserBase.MaxUserNameLength)]
@@ -23,8 +23,18 @@ namespace Mf.Users.Dto
         public string Surname { get; set; }
         
         [Required]
-        [StringLength(AbpUserBase.MaxNameLength)]
+        public int Age { get; set; }
+        
+        [Required]
         public string Gender { get; set; }
+        
+        [Required]
+        public string PreferendGender { get; set; }
+        
+        [Required]
+        public string Location { get; set; }
+        
+        public string[] Interests { get; set; }
 
         [Required]
         [EmailAddress]
@@ -39,7 +49,7 @@ namespace Mf.Users.Dto
         [StringLength(AbpUserBase.MaxPlainPasswordLength)]
         [DisableAuditing]
         public string Password { get; set; }
-
+        
         public void Normalize()
         {
             if (RoleNames == null)

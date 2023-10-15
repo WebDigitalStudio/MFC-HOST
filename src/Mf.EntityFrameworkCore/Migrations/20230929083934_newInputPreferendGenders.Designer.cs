@@ -3,6 +3,7 @@ using System;
 using Mf.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Mf.Migrations
 {
     [DbContext(typeof(MfDbContext))]
-    partial class MfDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230929083934_newInputPreferendGenders")]
+    partial class newInputPreferendGenders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1453,9 +1456,6 @@ namespace Mf.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Age")
-                        .HasColumnType("integer");
-
                     b.Property<string>("AuthenticationSource")
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)");
@@ -1486,12 +1486,6 @@ namespace Mf.Migrations
                         .HasMaxLength(328)
                         .HasColumnType("character varying(328)");
 
-                    b.Property<string>("Gender")
-                        .HasColumnType("text");
-
-                    b.Property<string[]>("Interests")
-                        .HasColumnType("text[]");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
@@ -1515,9 +1509,6 @@ namespace Mf.Migrations
 
                     b.Property<long?>("LastModifierUserId")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("Location")
-                        .HasColumnType("text");
 
                     b.Property<DateTime?>("LockoutEndDateUtc")
                         .HasColumnType("timestamp with time zone");

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Abp.Application.Services.Dto;
 using Abp.Authorization.Users;
@@ -19,8 +20,18 @@ namespace Mf.Users.Dto
         public string Name { get; set; }
         
         [Required]
-        [StringLength(AbpUserBase.MaxNameLength)]
+        public int Age { get; set; }
+        
+        [Required]
         public string Gender { get; set; }
+        
+        [Required]
+        public string PreferendGender { get; set; }
+        
+        [Required]
+        public string Location { get; set; }
+        
+        public List<string> Interests { get; set; }
         
         [Required]
         [StringLength(AbpUserBase.MaxSurnameLength)]
@@ -39,6 +50,8 @@ namespace Mf.Users.Dto
 
         public DateTime CreationTime { get; set; }
 
-        public string[] RoleNames { get; set; }
+        public List<string> RoleNames { get; set; }
+        
     }
+    
 }

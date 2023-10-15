@@ -6,13 +6,14 @@ using Mf.Users.Dto;
 
 namespace Mf.Users
 {
-    public interface IUserAppService : IAsyncCrudAppService<UserDto, long, PagedUserResultRequestDto, CreateUserDto, UserDto>
+    public interface IUserAppService : IAsyncCrudAppService<UserDto, long, PagedUserResultRequestDto, CreateUserInput, UserDto>
     {
         Task DeActivate(EntityDto<long> user);
         Task Activate(EntityDto<long> user);
         Task<ListResultDto<RoleDto>> GetRoles();
         Task ChangeLanguage(ChangeUserLanguageDto input);
 
+        Task<object> GetPreferendGender(GetPreferendGenderDto input);
         Task<bool> ChangePassword(ChangePasswordDto input);
     }
 }

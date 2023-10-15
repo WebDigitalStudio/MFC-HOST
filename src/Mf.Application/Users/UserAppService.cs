@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using Abp.Authorization;
+using Abp.Authorization.Users;
+using Abp.Collections.Extensions;
 using Abp.Domain.Entities;
 using Abp.Domain.Repositories;
 using Abp.Extensions;
@@ -14,19 +16,22 @@ using Abp.Linq.Extensions;
 using Abp.Localization;
 using Abp.Runtime.Session;
 using Abp.UI;
+using JetBrains.Annotations;
 using Mf.Authorization;
 using Mf.Authorization.Accounts;
 using Mf.Authorization.Roles;
 using Mf.Authorization.Users;
+using Mf.Common.Extensions;
 using Mf.Roles.Dto;
 using Mf.Users.Dto;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mf.Users
 {
     [AbpAuthorize(PermissionNames.Pages_Users)]
-    public class UserAppService : AsyncCrudAppService<User, UserDto, long, PagedUserResultRequestDto, CreateUserDto, UserDto>, IUserAppService
+    public class UserAppService : AsyncCrudAppService<User, UserDto, long, PagedUserResultRequestDto, CreateUserInput, UserDto>, IUserAppService
     {
         private readonly UserManager _userManager;
         private readonly RoleManager _roleManager;
@@ -53,10 +58,10 @@ namespace Mf.Users
             _logInManager = logInManager;
         }
 
-        public override async Task<UserDto> CreateAsync(CreateUserDto input)
+        public override async Task<UserDto> CreateAsync(CreateUserInput input)
         {
             CheckCreatePermission();
-
+            
             var user = ObjectMapper.Map<User>(input);
 
             user.TenantId = AbpSession.TenantId;
@@ -65,13 +70,13 @@ namespace Mf.Users
             await _userManager.InitializeOptionsAsync(AbpSession.TenantId);
 
             CheckErrors(await _userManager.CreateAsync(user, input.Password));
-
+            
             if (input.RoleNames != null)
             {
                 CheckErrors(await _userManager.SetRolesAsync(user, input.RoleNames));
             }
 
-            CurrentUnitOfWork.SaveChanges();
+            await CurrentUnitOfWork.SaveChangesAsync();
 
             return MapToEntityDto(user);
         }
@@ -88,10 +93,21 @@ namespace Mf.Users
 
             if (input.RoleNames != null)
             {
-                CheckErrors(await _userManager.SetRolesAsync(user, input.RoleNames));
+                CheckErrors(await _userManager.SetRolesAsync(user, input.RoleNames.ToArray()));
             }
 
             return await GetAsync(input);
+        }
+        //public async Task ChangeLanguage(ChangeUserLanguageDto input)
+        public async Task UpdatePreferendGender(UpdatePreferendGenderDto input)
+        {
+            await Repository.UpdateAsync(input.UserId, async (entity) =>
+            {
+                if (input.NewPreferendGender != entity.PreferendGender)
+                {
+                    entity.PreferendGender = input.NewPreferendGender;
+                }
+            });
         }
 
         public override async Task DeleteAsync(EntityDto<long> input)
@@ -124,6 +140,36 @@ namespace Mf.Users
             return new ListResultDto<RoleDto>(ObjectMapper.Map<List<RoleDto>>(roles));
         }
 
+        public async Task<object> GetPreferendGender(GetPreferendGenderDto input)
+        {   
+            string PreferendGender = "";
+            
+            await Repository.UpdateAsync(Convert.ToInt64(input.UserId), async (entity) =>
+            {
+                PreferendGender = entity.PreferendGender;
+            });
+            var genders = new { UserId = input.UserId, PreferendGender};
+            return genders;
+        }
+        
+        public async Task<ListResultDto<GetPreferendPeopleDto>> GetPreferendPeople(GetPreferendPeopleDtoInput input)
+        {
+            var includedQuery = Repository.GetAllIncluding();
+
+            var filteredQuery = includedQuery
+                .WhereIf(!input.Location.IsNullOrWhiteSpace(), x => x.Location == input.Location)
+                .Where(x => x.Gender == input.PreferendGender)
+                .Where(x => x.Age > input.AgeMin && x.Age < input.AgeMax);
+            
+            var projectedQuery = filteredQuery
+                .ProjectTo<GetPreferendPeopleDto>(ObjectMapper);
+
+            var result = await projectedQuery
+                .ToListAsync();
+
+            return new ListResultDto<GetPreferendPeopleDto>(result);
+        }
+        
         public async Task ChangeLanguage(ChangeUserLanguageDto input)
         {
             await SettingManager.ChangeSettingForUserAsync(
@@ -133,7 +179,7 @@ namespace Mf.Users
             );
         }
 
-        protected override User MapToEntity(CreateUserDto createInput)
+        protected override User MapToEntity(CreateUserInput createInput)
         {
             var user = ObjectMapper.Map<User>(createInput);
             user.SetNormalizedNames();
@@ -148,26 +194,38 @@ namespace Mf.Users
 
         protected override UserDto MapToEntityDto(User user)
         {
-            var roleIds = user.Roles.Select(x => x.RoleId).ToArray();
+            var roleIds = user.Roles
+                .Select(x => x.RoleId);
 
-            var roles = _roleManager.Roles.Where(r => roleIds.Contains(r.Id)).Select(r => r.NormalizedName);
+            var roles = _roleManager.Roles
+                .Where(r => roleIds.Equals(r.Id))
+                .Select(r => r.NormalizedName)
+                .ToList();
 
             var userDto = base.MapToEntityDto(user);
-            userDto.RoleNames = roles.ToArray();
+            userDto.RoleNames = roles;
 
             return userDto;
         }
 
         protected override IQueryable<User> CreateFilteredQuery(PagedUserResultRequestDto input)
         {
-            return Repository.GetAllIncluding(x => x.Roles)
-                .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x => x.UserName.Contains(input.Keyword) || x.Name.Contains(input.Keyword) || x.EmailAddress.Contains(input.Keyword))
-                .WhereIf(input.IsActive.HasValue, x => x.IsActive == input.IsActive);
+            var includedQuery = Repository.GetAllIncluding(x => x.Roles);
+
+            var filteredQuery = includedQuery
+                .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x => x.UserName.Contains(input.Keyword) 
+                                                                   || x.Name.Contains(input.Keyword) 
+                                                                   || x.EmailAddress.Contains(input.Keyword))
+                .WhereIf(input.IsActive.HasValue, x => x.IsActive.Equals(input.IsActive));
+
+            return filteredQuery;
         }
 
         protected override async Task<User> GetEntityByIdAsync(long id)
         {
-            var user = await Repository.GetAllIncluding(x => x.Roles).FirstOrDefaultAsync(x => x.Id == id);
+            var user = await Repository
+                .GetAllIncluding(x => x.Roles)
+                .FirstOrDefaultAsync(x => x.Id.Equals(id));
 
             if (user == null)
             {
@@ -194,7 +252,7 @@ namespace Mf.Users
             var user = await _userManager.FindByIdAsync(AbpSession.GetUserId().ToString());
             if (user == null)
             {
-                throw new Exception("There is no current user!");
+                throw new EntityNotFoundException(typeof(User), input);
             }
             
             if (await _userManager.CheckPasswordAsync(user, input.CurrentPassword))

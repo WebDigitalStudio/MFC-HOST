@@ -37,7 +37,7 @@ namespace Mf.Authorization.Users
             AbpSession = NullAbpSession.Instance;
         }
 
-        public async Task<User> RegisterAsync(string name, string surname, string gender, string emailAddress, string userName, string plainPassword, bool isEmailConfirmed)
+        public async Task<User> RegisterAsync(string name, string surname, int age, string gender, string preferendGender,string location, string[] interests, string emailAddress, string userName, string plainPassword, bool isEmailConfirmed)
         {
             CheckForTenant();
 
@@ -48,7 +48,11 @@ namespace Mf.Authorization.Users
                 TenantId = tenant.Id,
                 Name = name,
                 Surname = surname,
-                Gender = gender,         
+                Age = age,
+                Gender = gender,
+                PreferendGender = preferendGender,
+                Location = location,
+                // Interests = interests,
                 EmailAddress = emailAddress,
                 IsActive = true,
                 UserName = userName,
