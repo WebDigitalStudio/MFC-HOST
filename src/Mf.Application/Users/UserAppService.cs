@@ -21,6 +21,7 @@ using Mf.Authorization;
 using Mf.Authorization.Accounts;
 using Mf.Authorization.Roles;
 using Mf.Authorization.Users;
+using Mf.Common.Extensions;
 using Mf.Roles.Dto;
 using Mf.Users.Dto;
 using Microsoft.AspNetCore.Identity;
@@ -151,7 +152,7 @@ namespace Mf.Users
             return genders;
         }
         
-        public GetPreferendPeopleDtoResult GetPreferendPeople(GetPreferendPeopleDtoInput input)
+        public async Task<ListResultDto<GetPreferendPeopleDto>> GetPreferendPeople(GetPreferendPeopleDtoInput input)
         {
             var includedQuery = Repository.GetAllIncluding();
 
@@ -160,9 +161,13 @@ namespace Mf.Users
                 .Where(x => x.Gender == input.PreferendGender)
                 .Where(x => x.Age > input.AgeMin && x.Age < input.AgeMax);
             
-            var user = ObjectMapper.Map<GetPreferendPeopleDtoResult>(filteredQuery);
+            var projectedQuery = filteredQuery
+                .ProjectTo<GetPreferendPeopleDto>(ObjectMapper);
 
-            return user;
+            var result = await projectedQuery
+                .ToListAsync();
+
+            return new ListResultDto<GetPreferendPeopleDto>(result);
         }
         
         public async Task ChangeLanguage(ChangeUserLanguageDto input)

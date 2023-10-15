@@ -13,7 +13,7 @@ namespace Mf.Authorization.Users
         public string Gender { get; set; }
         public string PreferendGender { get; set; }
         public string Location { get; set; }
-        // public ICollection<string> Interests { get; set; }  
+        public string[] Interests { get; set; }  
         public int Age { get; set; }
         
         public static string CreateRandomPassword()
@@ -40,7 +40,7 @@ namespace Mf.Authorization.Users
                 Gender = gender,
                 PreferendGender = preferendGender,
                 Location = location,
-                // Interests = interests.ToList(),
+                Interests = interests,
                 EmailAddress = emailAddress,
                 Roles = new List<UserRole>()
             };

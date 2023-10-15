@@ -24,6 +24,7 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.3" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Mf.Application\Mf.Application.csproj" />
     <ProjectReference Include="..\Mf.Core\Mf.Core.csproj" />
   </ItemGroup>
 </Project>
